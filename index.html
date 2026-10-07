@@ -1,0 +1,333 @@
+<!-- Created by Erion Nezha — © 2026 All rights reserved -->
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biseda — Erion Nezha</title>
+<meta name="description" content="Lista bisedash, dërgim mesazhesh dhe përgjigje automatike — si WhatsApp, por demo lokale.">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+<style id="appcss">
+/* ============ ERION NEZHA · ULTRA-PREMIUM THEME (shared) ============ */
+:root{
+  --bg0:#070b16; --bg1:#0b1124; --gold:#D4AF37; --gold2:#f3dd8f;
+  --ink:#eef1f7; --mut:#9aa3b8; --glass:rgba(255,255,255,.055);
+  --line:rgba(212,175,55,.22); --r:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  background:var(--bg0); color:var(--ink); min-height:100vh; overflow-x:hidden;
+}
+.bg-orbs{position:fixed;inset:0;z-index:-1;overflow:hidden}
+.bg-orbs span{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;animation:drift 14s ease-in-out infinite alternate}
+.bg-orbs span:nth-child(1){width:520px;height:520px;left:-140px;top:-120px;background:radial-gradient(circle,#D4AF37,transparent 65%)}
+.bg-orbs span:nth-child(2){width:620px;height:620px;right:-180px;top:30%;background:radial-gradient(circle,#2b3f8f,transparent 65%);animation-delay:-5s}
+.bg-orbs span:nth-child(3){width:460px;height:460px;left:20%;bottom:-160px;background:radial-gradient(circle,#6b4fa1,transparent 65%);animation-delay:-9s}
+@keyframes drift{to{transform:translate(60px,40px) scale(1.12)}}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.site-header{padding:64px 0 30px;text-align:center}
+.overline{letter-spacing:.42em;font-size:11px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+.site-header h1{font-size:clamp(30px,5vw,52px);font-weight:800;line-height:1.15;
+  background:linear-gradient(120deg,#fff 20%,var(--gold2) 55%,var(--gold) 80%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.site-header p{color:var(--mut);max-width:640px;margin:14px auto 0;font-size:16px;line-height:1.65}
+.live-badge{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:8px 18px;border-radius:999px;
+  border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(10px);font-size:13px;color:var(--gold2);letter-spacing:.08em}
+.live-badge i{width:9px;height:9px;border-radius:50%;background:#3ddc84;box-shadow:0 0 12px #3ddc84;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.demo-wrap{margin:26px 0 54px}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:var(--r);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 24px 60px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);padding:30px}
+.code-section{margin:0 0 60px}
+.code-section h2{font-size:24px;margin-bottom:6px}
+.code-section .sub{color:var(--mut);font-size:14px;margin-bottom:18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:0;align-items:center}
+.ctab{padding:10px 22px;border-radius:12px 12px 0 0;border:1px solid var(--line);border-bottom:none;cursor:pointer;
+  background:rgba(255,255,255,.03);color:var(--mut);font-size:14px;font-weight:600;letter-spacing:.04em;transition:.25s}
+.ctab.active{background:linear-gradient(180deg,rgba(212,175,55,.22),rgba(212,175,55,.06));color:var(--gold2)}
+.ctab:hover{color:var(--ink)}
+#copyBtn{margin-left:auto;padding:9px 20px;border-radius:10px;border:1px solid var(--line);cursor:pointer;
+  background:linear-gradient(120deg,var(--gold),#a8842a);color:#0a0e1a;font-weight:700;font-size:13px;transition:.25s}
+#copyBtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(212,175,55,.35)}
+.codebox{border:1px solid var(--line);border-radius:0 14px 14px 14px;overflow:hidden;background:#0d1326}
+.codebox pre{margin:0;max-height:560px;overflow:auto}
+.codebox pre code{display:block;padding:22px;font-family:"Cascadia Code","Fira Code",Consolas,monospace;font-size:13.5px;line-height:1.7;background:transparent}
+.codebox pre::-webkit-scrollbar{width:10px;height:10px}
+.codebox pre::-webkit-scrollbar-thumb{background:rgba(212,175,55,.35);border-radius:8px}
+footer{text-align:center;padding:34px 20px 44px;color:var(--mut);font-size:14px;border-top:1px solid rgba(212,175,55,.14)}
+footer strong{color:var(--gold2)}
+/* ============ APP CSS (per projekt) ============ */
+
+.bs-note{display:inline-block;margin-bottom:20px;padding:8px 18px;border-radius:999px;border:1px solid var(--line);
+  background:rgba(212,175,55,.08);color:var(--gold2);font-size:13px;letter-spacing:.03em}
+.bs-app{display:flex;height:600px;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(8,12,26,.6)}
+.bs-side{width:320px;min-width:280px;border-right:1px solid var(--line);display:flex;flex-direction:column;background:rgba(255,255,255,.02)}
+.bs-side-head{padding:16px;border-bottom:1px solid var(--line)}
+.bs-side-head b{font-size:18px;display:block;margin-bottom:12px;color:var(--gold2)}
+.bs-side-head input,.bs-form input{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);
+  border-radius:12px;padding:10px 14px;color:var(--ink);font-size:14px;outline:none}
+.bs-side-head input:focus,.bs-form input:focus{border-color:var(--gold)}
+.bs-contacts{flex:1;overflow-y:auto}
+.bs-contact{display:flex;gap:12px;align-items:center;width:100%;padding:14px 16px;background:none;border:none;
+  border-bottom:1px solid rgba(255,255,255,.04);cursor:pointer;color:var(--ink);text-align:left;transition:.2s}
+.bs-contact:hover{background:rgba(212,175,55,.07)}
+.bs-contact.active{background:rgba(212,175,55,.14);border-left:3px solid var(--gold)}
+.bs-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;color:#0a0e1a;flex-shrink:0}
+.bs-cmeta{flex:1;min-width:0}
+.bs-cmeta .bs-row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.bs-cmeta b{font-size:15px}
+.bs-cmeta .bs-time{font-size:11px;color:var(--mut);white-space:nowrap}
+.bs-cmeta .bs-last{font-size:13px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}
+.bs-badge{background:var(--gold);color:#0a0e1a;font-size:11px;font-weight:800;min-width:22px;height:22px;
+  border-radius:11px;display:flex;align-items:center;justify-content:center;padding:0 6px}
+.bs-chat{flex:1;display:flex;flex-direction:column;min-width:0;position:relative}
+.bs-empty{margin:auto;text-align:center;color:var(--mut);padding:30px}
+.bs-empty-emoji{font-size:64px;margin-bottom:14px}
+.bs-empty h3{color:var(--ink);margin-bottom:8px}
+.bs-convo{display:flex;flex-direction:column;height:100%;min-height:0}
+.bs-chead{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+.bs-back{display:none;background:none;border:1px solid var(--line);color:var(--ink);border-radius:10px;
+  width:36px;height:36px;font-size:18px;cursor:pointer}
+.bs-cavatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-weight:800;color:#0a0e1a;font-size:18px}
+.bs-cinfo b{display:block;font-size:15px}
+.bs-online{font-size:12px;color:#3ddc84;display:flex;align-items:center;gap:6px}
+.bs-online i{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84}
+.bs-msgs{flex:1;overflow-y:auto;padding:20px 16px;display:flex;flex-direction:column;gap:10px;min-height:0;
+  background:radial-gradient(ellipse at 20% 0%,rgba(212,175,55,.05),transparent 55%)}
+.bs-bub{max-width:75%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.5;position:relative;animation:bsin .25s ease}
+@keyframes bsin{from{opacity:0;transform:translateY(8px)}}
+.bs-bub.mine{align-self:flex-end;background:linear-gradient(135deg,var(--gold),#a8842a);color:#0a0e1a;border-bottom-right-radius:4px}
+.bs-bub.theirs{align-self:flex-start;background:rgba(255,255,255,.08);border:1px solid var(--line);border-bottom-left-radius:4px}
+.bs-bub small{display:block;font-size:10px;opacity:.65;margin-top:4px;text-align:right}
+.bs-typing{align-self:flex-start;display:flex;gap:5px;align-items:center;background:rgba(255,255,255,.08);
+  border:1px solid var(--line);border-radius:16px;padding:12px 16px;font-size:13px;color:var(--mut)}
+.bs-typing[hidden]{display:none}
+.bs-typing span{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:bsb 1s infinite}
+.bs-typing span:nth-child(2){animation-delay:.15s}.bs-typing span:nth-child(3){animation-delay:.3s}
+@keyframes bsb{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.bs-form{display:flex;gap:10px;padding:14px 16px;border-top:1px solid var(--line)}
+.bs-form button{background:linear-gradient(120deg,var(--gold),#a8842a);border:none;border-radius:12px;
+  padding:11px 24px;font-weight:700;cursor:pointer;color:#0a0e1a;transition:.2s}
+.bs-form button:hover{transform:translateY(-2px)}
+@media(max-width:720px){
+  .bs-app{height:78vh}
+  .bs-side{width:100%;min-width:0;border-right:none}
+  .bs-app.chat-open .bs-side{display:none}
+  .bs-chat{display:none}
+  .bs-app.chat-open .bs-chat{display:flex}
+  .bs-back{display:block}
+}
+
+@media(max-width:640px){.glass{padding:20px}.site-header{padding:44px 0 22px}}
+</style>
+</head>
+<body>
+<div class="bg-orbs"><span></span><span></span><span></span></div>
+
+<header class="site-header wrap">
+  <div class="overline">Erion Nezha · Web Projects</div>
+  <h1>Biseda</h1>
+  <p>Lista bisedash, dërgim mesazhesh dhe përgjigje automatike — si WhatsApp, por demo lokale.</p>
+  <div class="live-badge"><i></i> LIVE DEMO</div>
+</header>
+
+<main class="wrap">
+  <section class="demo-wrap">
+    <div class="glass" id="demo">
+
+<div class="bs-note">📌 Demo lokale — bashkëbiseduesit janë simulim; mesazhet ruhen në shfletuesin tënd</div>
+<div class="bs-app" id="bsApp">
+  <aside class="bs-side">
+    <div class="bs-side-head">
+      <b>Bisedat</b>
+      <input id="bsSearch" placeholder="🔍 Kërko kontakt…" autocomplete="off">
+    </div>
+    <div class="bs-contacts" id="bsContacts"></div>
+  </aside>
+  <section class="bs-chat">
+    <div class="bs-empty" id="bsEmpty">
+      <div class="bs-empty-emoji">💬</div>
+      <h3>Mirë se erdhe te Biseda</h3>
+      <p>Zgjidh një kontakt nga lista për të filluar bisedën.</p>
+    </div>
+    <div class="bs-convo" id="bsConvo" hidden>
+      <header class="bs-chead">
+        <button class="bs-back" id="bsBack" title="Kthehu">←</button>
+        <div class="bs-cavatar" id="bsCAvatar"></div>
+        <div class="bs-cinfo"><b id="bsCName"></b><span class="bs-online"><i></i>online</span></div>
+      </header>
+      <div class="bs-msgs" id="bsMsgs"></div>
+      <div class="bs-typing" id="bsTyping" hidden><span></span><span></span><span></span> po shkruan…</div>
+      <form class="bs-form" id="bsForm">
+        <input id="bsInput" placeholder="Shkruaj një mesazh…" maxlength="500" autocomplete="off">
+        <button type="submit">Dërgo</button>
+      </form>
+    </div>
+  </section>
+</div>
+
+    </div>
+  </section>
+
+  <section class="code-section">
+    <h2>💻 Kodi Burim</h2>
+    <p class="sub">I gjithë kodi i këtij projekti — i lexueshëm, i kopjueshëm, gati për t'u mësuar.</p>
+    <div class="tabs">
+      <button class="ctab active" data-tab="html">HTML</button>
+      <button class="ctab" data-tab="css">CSS</button>
+      <button class="ctab" data-tab="js">JavaScript</button>
+      <button id="copyBtn">Kopjo kodin</button>
+    </div>
+    <div class="codebox"><pre><code id="codeView" class="language-html"></code></pre></div>
+  </section>
+</main>
+
+<footer>Krijuar nga <strong>Erion Nezha</strong> · © 2026 — Të gjitha të drejtat e rezervuara</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script id="appjs">
+
+(function(){
+"use strict";
+var LS="biseda_v1";
+var contacts=[
+ {id:"megi",name:"Megi",init:"M",g:"linear-gradient(135deg,#f6d365,#fda085)",seed:[
+   {me:false,t:"Përshëndetje! Si je?",at:"09:12"},
+   {me:true,t:"Mirë, faleminderit! Po ti?",at:"09:15"},
+   {me:false,t:"Shumë mirë 😊",at:"09:16"}]},
+ {id:"babi",name:"Babi",init:"B",g:"linear-gradient(135deg,#a18cd1,#fbc2eb)",seed:[
+   {me:false,t:"Bir, kur vjen për drekë?",at:"12:40"}]},
+ {id:"mela",name:"Mela",init:"M",g:"linear-gradient(135deg,#43cea2,#185a9d)",seed:[
+   {me:false,t:"E pe filmin e ri?",at:"Dje"},
+   {me:false,t:"Duhet ta shohim bashkë!",at:"Dje"}]},
+ {id:"arben",name:"Arben",init:"A",g:"linear-gradient(135deg,#f83600,#f9d423)",seed:[]}
+];
+var state={msgs:{},unread:{}};
+try{var raw=localStorage.getItem(LS);if(raw)state=JSON.parse(raw);}catch(e){}
+contacts.forEach(function(c){
+  if(!state.msgs[c.id])state.msgs[c.id]=c.seed.slice();
+  if(state.unread[c.id]===undefined)state.unread[c.id]=(c.id==="megi"?2:(c.id==="babi"?1:(c.id==="mela"?2:0)));
+});
+function save(){try{localStorage.setItem(LS,JSON.stringify(state));}catch(e){}}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function now(){var d=new Date();return (d.getHours()<10?"0":"")+d.getHours()+":"+(d.getMinutes()<10?"0":"")+d.getMinutes();}
+function lastOf(c){var m=state.msgs[c.id];return m.length?m[m.length-1]:null;}
+
+var app=document.getElementById("bsApp"),
+    listEl=document.getElementById("bsContacts"),
+    searchEl=document.getElementById("bsSearch"),
+    convo=document.getElementById("bsConvo"),
+    empty=document.getElementById("bsEmpty"),
+    msgsEl=document.getElementById("bsMsgs"),
+    form=document.getElementById("bsForm"),
+    input=document.getElementById("bsInput"),
+    typing=document.getElementById("bsTyping"),
+    activeId=null,filter="";
+
+function renderContacts(){
+  listEl.innerHTML="";
+  contacts.filter(function(c){return c.name.toLowerCase().indexOf(filter)>-1;}).forEach(function(c){
+    var l=lastOf(c),u=state.unread[c.id]||0;
+    var b=document.createElement("button");
+    b.className="bs-contact"+(c.id===activeId?" active":"");
+    b.innerHTML='<div class="bs-avatar" style="background:'+c.g+'">'+c.init+'</div>'+
+      '<div class="bs-cmeta"><div class="bs-row"><b>'+esc(c.name)+'</b><span class="bs-time">'+(l?esc(l.at):"")+'</span></div>'+
+      '<div class="bs-cmeta"><div class="bs-last">'+(l?esc(l.t):"Asnjë mesazh ende")+'</div></div></div>'+
+      (u?'<span class="bs-badge">'+u+'</span>':"");
+    b.addEventListener("click",function(){openChat(c.id);});
+    listEl.appendChild(b);
+  });
+}
+function openChat(id){
+  activeId=id;state.unread[id]=0;save();
+  var c=contacts.filter(function(x){return x.id===id;})[0];
+  empty.style.display="none";convo.hidden=false;
+  document.getElementById("bsCName").textContent=c.name;
+  var av=document.getElementById("bsCAvatar");av.textContent=c.init;av.style.background=c.g;
+  app.classList.add("chat-open");
+  renderContacts();renderMsgs();input.focus();
+}
+function renderMsgs(){
+  msgsEl.innerHTML="";
+  state.msgs[activeId].forEach(function(m){
+    var d=document.createElement("div");
+    d.className="bs-bub "+(m.me?"mine":"theirs");
+    d.innerHTML=esc(m.t)+"<small>"+esc(m.at)+"</small>";
+    msgsEl.appendChild(d);
+  });
+  msgsEl.scrollTop=msgsEl.scrollHeight;
+}
+document.getElementById("bsBack").addEventListener("click",function(){app.classList.remove("chat-open");});
+searchEl.addEventListener("input",function(){filter=searchEl.value.trim().toLowerCase();renderContacts();});
+
+function botReply(c,text){
+  var t=text.toLowerCase();
+  var R={
+    megi:["Po, zemër? 😊","Mirë që më shkrove!","Haha, e drejtë ke 😄"],
+    babi:["Mirë, bir. Kujdesu për veten.","OK, flasim më vonë.","👍"],
+    mela:["Haha pooo 😂","Seriozisht?!","Na trego më shumë!"],
+    arben:["Vëlla, si e ke?","Hajde pimë një kafe nesër ☕","Ok, u morëm vesh 👊"]
+  };
+  if(/përsh|tungjatjeta|\bcka\b|hej|hello|mirëdita|mirëmbrëma/.test(t))
+    return {megi:"Përshëndetje zemër! 😊 Si je?",babi:"Përshëndetje bir!",mela:"Hej hej! 😎",arben:"Tung vëlla!"}[c.id];
+  if(/si je|si jeni/.test(t))return "Jam shumë mirë, faleminderit! Po ti si je?";
+  if(/faleminderit|falem\b/.test(t))return "S’ka përse! 😊";
+  if(/mirupafshim|natën/.test(t))return "Mirupafshim! Natën e mirë 🌙";
+  if(/ok/.test(t))return "Super! 👍";
+  if(/po bën|çfarë bën|cfare ben/.test(t))return "Asgjë të veçantë, po pushoj pak. Po ti?";
+  var pool=R[c.id];return pool[Math.floor(Math.random()*pool.length)];
+}
+
+form.addEventListener("submit",function(e){
+  e.preventDefault();
+  if(!activeId)return;
+  var v=input.value.trim();if(!v)return;
+  state.msgs[activeId].push({me:true,t:v,at:now()});
+  input.value="";save();renderMsgs();renderContacts();
+  var c=contacts.filter(function(x){return x.id===activeId;})[0];
+  typing.hidden=false;msgsEl.scrollTop=msgsEl.scrollHeight;
+  setTimeout(function(){
+    typing.hidden=true;
+    state.msgs[activeId].push({me:false,t:botReply(c,v),at:now()});
+    save();renderMsgs();renderContacts();
+  },1200);
+});
+renderContacts();
+save();
+})();
+
+
+</script>
+<script>
+(function(){
+  var tabs={
+    html:{lang:"html",get:function(){return document.getElementById("demo").innerHTML.trim();}},
+    css:{lang:"css",get:function(){return document.getElementById("appcss").textContent.trim();}},
+    js:{lang:"javascript",get:function(){return document.getElementById("appjs").textContent.trim();}}
+  };
+  var view=document.getElementById("codeView"),cur="html";
+  function render(){
+    view.textContent=tabs[cur].get();
+    view.className="language-"+tabs[cur].lang;
+    if(window.hljs){delete view.dataset.highlighted;hljs.highlightElement(view);}
+    var bs=document.querySelectorAll(".ctab");
+    for(var i=0;i<bs.length;i++)bs[i].classList.toggle("active",bs[i].dataset.tab===cur);
+  }
+  var bs=document.querySelectorAll(".ctab");
+  for(var i=0;i<bs.length;i++)bs[i].addEventListener("click",function(){cur=this.dataset.tab;render();});
+  document.getElementById("copyBtn").addEventListener("click",function(){
+    var b=this,code=tabs[cur].get();
+    function done(t){b.textContent=t;setTimeout(function(){b.textContent="Kopjo kodin";},1600);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(code).then(function(){done("U kopjua ✓");},function(){done("Dështoi");});}
+    else{var ta=document.createElement("textarea");ta.value=code;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done("U kopjua ✓");}catch(e){done("Dështoi");}document.body.removeChild(ta);}
+  });
+  render();
+})();
+</script>
+</body>
+</html>
